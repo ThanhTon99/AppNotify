@@ -12,6 +12,7 @@ namespace AppNotify.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Permission { get; set; }
        
     }
     
@@ -21,5 +22,7 @@ namespace AppNotify.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Permission { get; set; }
+
     }
 }

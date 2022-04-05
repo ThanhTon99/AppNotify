@@ -35,7 +35,6 @@ namespace AppNotify.Controllers
 
             return new JsonResult(dbList);
         }
-
         [HttpGet]
         [Route("gettruoc")]
         public JsonResult GetData()
@@ -89,6 +88,7 @@ namespace AppNotify.Controllers
 
             return new JsonResult(List1);
         }
+
 
         [HttpPost]
 

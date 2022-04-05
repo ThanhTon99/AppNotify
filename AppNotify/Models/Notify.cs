@@ -36,5 +36,6 @@ namespace AppNotify.Models
         public bool Activate { get; set; }
         public string Login { get; set; }
         public string Display { get; set; }
+
     }
 }
