@@ -15,9 +15,9 @@ namespace AppNotify.Models
         public string Title { get; set; }
         public string Description { get; set;}
         public string Content { get; set; }
-        public string Link { get; set; }
-        public string PhotoFileName { get; set; }
-        public IFormFile files { get; set; }
+        //public string Link { get; set; }
+      //  public string PhotoFileName { get; set; }
+     //   public IFormFile files { get; set; }
         public bool Activate { get; set; }
         public string Login { get;set; }
         public string Display { get; set; }
@@ -30,9 +30,9 @@ namespace AppNotify.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
-        public string Link { get; set; }
-        public string PhotoFileName { get; set; }
-        public IFormFile files { get; set; }
+      //  public string Link { get; set; }
+     //   public string PhotoFileName { get; set; }
+      //  public IFormFile files { get; set; }
         public bool Activate { get; set; }
         public string Login { get; set; }
         public string Display { get; set; }

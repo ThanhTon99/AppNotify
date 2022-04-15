@@ -115,9 +115,9 @@ namespace AppNotify.Controllers
                                                 .Set(x => x.Department, not.Department)
                                                 .Set(x => x.Description, not.Description)
                                                 .Set(x => x.Content, not.Content)
-                                                .Set(x => x.Link, not.Link)
-                                                .Set(x => x.PhotoFileName, not.PhotoFileName)
-                                                .Set(x => x.files, not.files)
+                                                //.Set(x => x.Link, not.Link)
+                                                //.Set(x => x.PhotoFileName, not.PhotoFileName)
+                                                //.Set(x => x.files, not.files)
                                                 .Set(x => x.Activate, not.Activate)
                                                 .Set(x => x.Login, not.Login)
                                                 .Set(x => x.Display, not.Display);
@@ -161,38 +161,38 @@ namespace AppNotify.Controllers
         //    }
         //}
 
-        [HttpPost]
-        [Route("upload")]
+        //[HttpPost]
+        //[Route("upload")]
 
-        public string PostImage([FromForm] Notify objectFile)
-        {
-            try
-            {
-                if (objectFile.files.Length > 0)
-                {
-                    string path = _env.ContentRootPath + "/Photos/";
+        //public string PostImage([FromForm] Notify objectFile)
+        //{
+        //    try
+        //    {
+        //        if (objectFile.files.Length > 0)
+        //        {
+        //            string path = _env.ContentRootPath + "/Photos/";
 
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    using (FileStream fileStream = System.IO.File.Create(path + objectFile.files.FileName))
-                    {
-                        objectFile.files.CopyTo(fileStream);
-                        fileStream.Flush();
-                        return "Uploaded";
-                    }
-                }
-                else
-                {
-                    return "Not Uploaded";
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
+        //            if (!Directory.Exists(path))
+        //            {
+        //                Directory.CreateDirectory(path);
+        //            }
+        //            using (FileStream fileStream = System.IO.File.Create(path + objectFile.files.FileName))
+        //            {
+        //                objectFile.files.CopyTo(fileStream);
+        //                fileStream.Flush();
+        //                return "Uploaded";
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return "Not Uploaded";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //}
     }
 }
 
