@@ -10,6 +10,7 @@ using AppNotify.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using MongoDB.Bson;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppNotify.Controllers
 {
@@ -18,16 +19,18 @@ namespace AppNotify.Controllers
     public class DepartmentController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
         public DepartmentController(IConfiguration configuration)
         {
             _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("NotifyAppCon");
         }
-
+        
         [HttpGet]
 
         public JsonResult Get()
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             var dbList = dbClient.GetDatabase("Notify").GetCollection<Department>("Department").AsQueryable();
 
@@ -36,14 +39,16 @@ namespace AppNotify.Controllers
 
         [HttpPost]
 
-        public JsonResult Post(Department dep)
+        public JsonResult Post(DepartmentRequest request)
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             int LastUserId = dbClient.GetDatabase("Notify").GetCollection<Department>("Department").AsQueryable().Count();
-            dep.UserId = LastUserId + 1;
+            request.UserId = LastUserId + 1;
 
-            dbClient.GetDatabase("Notify").GetCollection<Department>("Department").InsertOne(dep);
+            Department department = new Department(request);
+
+            dbClient.GetDatabase("Notify").GetCollection<Department>("Department").InsertOne(department);
 
             return new JsonResult("Added Successfully");
         }
@@ -52,12 +57,15 @@ namespace AppNotify.Controllers
 
         public JsonResult Put(DepartmentRequest dep)
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             var filter = Builders<Department>.Filter.Eq(x => x.Id, new BsonObjectId(new ObjectId(dep.Id)));
             var update = Builders<Department>.Update.Set(x => x.Username, dep.Username)
                                                     .Set(x => x.Password, dep.Password)
-                                                    .Set(x => x.Permission, dep.Permission);
+                                                    .Set(x => x.Roles, dep.Roles)
+                                                    .Set(x => x.TenNguoidung, dep.TenNguoidung)
+                                                    .Set(x => x.Chucvu, dep.Chucvu)
+                                                    .Set(x => x.Phongban, dep.Phongban);
 
             dbClient.GetDatabase("Notify").GetCollection<Department>("Department").UpdateOne(filter, update);
 
@@ -68,7 +76,7 @@ namespace AppNotify.Controllers
 
         public JsonResult Delete(int id)
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             var filter = Builders<Department>.Filter.Eq("UserId", id);
 
@@ -79,31 +87,31 @@ namespace AppNotify.Controllers
 
         // Phân Quyền User
         [HttpGet]
-        [Route("permission")]
+        [Route("rolesAdmin")]
         public JsonResult GetUser()
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             var dbList = dbClient.GetDatabase("Notify").GetCollection<Department>("Department").AsQueryable();
 
             var List = from list in dbList
-                        where list.Permission == "admin"
+                        where list.Roles == "Admin"
                         select list;
 
             return new JsonResult(List);
         }
         [HttpGet]
-        [Route("permission1")]
+        [Route("rolesMember")]
         public JsonResult GetUser1()
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_connectionString);
 
             var dbList = dbClient.GetDatabase("Notify").GetCollection<Department>("Department").AsQueryable();
 
             var List = from list in dbList
-                       where list.Permission == "member"
+                       where list.Roles == "Member"
                        select list;
-
+            
             return new JsonResult(List);
         }
 
