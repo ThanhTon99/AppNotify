@@ -87,7 +87,8 @@ namespace AppNotify.Controllers
 
         // Phân Quyền User
         [HttpGet]
-        [Route("rolesAdmin")]
+        [Route("roleAdmin")]
+        
         public JsonResult GetUser()
         {
             MongoClient dbClient = new MongoClient(_connectionString);
@@ -101,7 +102,7 @@ namespace AppNotify.Controllers
             return new JsonResult(List);
         }
         [HttpGet]
-        [Route("rolesMember")]
+        [Route("roleMember")]
         public JsonResult GetUser1()
         {
             MongoClient dbClient = new MongoClient(_connectionString);
