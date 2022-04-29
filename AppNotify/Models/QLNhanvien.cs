@@ -11,7 +11,7 @@ namespace AppNotify.Models
         public ObjectId Id { get; set; }
         public int IdNhanvien { get; set; }
         public string TenNhanvien { get; set; }
-        public int Sodienthoai { get; set; }
+        public string Sodienthoai { get; set; }
         public string Diachi { get; set; }
         public string TenChucvu { get; set; }
         public QLNhanvien(QLNhanvienRequest rq)
@@ -29,7 +29,7 @@ namespace AppNotify.Models
         public string Id { get; set; }
         public int IdNhanvien { get; set; }
         public string TenNhanvien { get; set; }
-        public int Sodienthoai { get; set; }
+        public string Sodienthoai { get; set; }
         public string Diachi { get; set; }
         public string TenChucvu { get; set; }
 

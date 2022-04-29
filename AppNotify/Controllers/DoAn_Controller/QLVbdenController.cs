@@ -16,7 +16,7 @@ namespace AppNotify.Controllers
 
     public class QLVbdenController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration; 
 
         public QLVbdenController(IConfiguration configuration)
         {
@@ -39,7 +39,7 @@ namespace AppNotify.Controllers
         [Route("getsave")]
         public JsonResult GetSave()
         {
-            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon"));
+            MongoClient dbClient = new MongoClient(_configuration.GetConnectionString("NotifyAppCon") );
 
             var dbList = dbClient.GetDatabase("Document").GetCollection<QLVbden>("QLVbden").AsQueryable();
             var List = from list in dbList
